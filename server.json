@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.pipeworx-io/cali-elangdell",
+  "title": "Cali Elangdell",
+  "description": "CALI eLangdell MCP — the free, Creative Commons-licensed US law-school",
+  "version": "0.1.0",
+  "websiteUrl": "https://pipeworx.io/packs/cali-elangdell",
+  "repository": {
+    "url": "https://github.com/pipeworx-io/mcp-cali-elangdell",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://gateway.pipeworx.io/cali-elangdell/mcp"
+    }
+  ]
+}
