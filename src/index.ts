@@ -902,7 +902,41 @@ function withAuthorityEnvelope(
  * and their rows say so.
  */
 
-import { TITLES, SURVEYED_AT, type ElangdellTitle } from './titles.js';
+import type { ElangdellTitle } from './titles.js';
+
+// fleet #3358 (mechanism: fleet #2754). The baked eLangdell title table is
+// served from KV, not from the gateway bundle: 92 KiB raw / 20.6 KiB of the
+// gateway's COMPRESSED script (measured as the marginal gzip delta) for a
+// table only this pack reads. workers/gateway/src/pack-baked-indexes.json
+// registers ./titles.ts; scripts/sync-gateway-static-json.mjs uploads its
+// exports at deploy; the dispatch path injects the parsed object as
+// `args._bakedIndex`.
+//
+// NEVER value-import ./titles.js here — the type-only import above is erased
+// from the bundle; a value import is not.
+let TITLES: ElangdellTitle[] = [];
+let SURVEYED_AT = '';
+
+/**
+ * Adopt the injected title table for this isolate's life. LOUD on absence:
+ * every tool in this pack answers FROM this table, so an empty one would
+ * report "no such casebook" for books that exist — the silent-zero failure
+ * docs/silent-zero-policy.md exists to forbid.
+ */
+function ensureTitles(args: Record<string, unknown>): void {
+  if (TITLES.length) return;
+  const idx = args._bakedIndex as Record<string, unknown> | null | undefined;
+  const rows = idx?.TITLES;
+  const surveyedAt = idx?.SURVEYED_AT;
+  if (!Array.isArray(rows) || rows.length === 0 || typeof surveyedAt !== 'string') {
+    throw new Error(
+      `cali-elangdell: the baked eLangdell title table is unavailable (${idx == null ? 'not injected' : 'malformed'}). ` +
+        'The gateway loads it from KV on the first call into this pack; this is a server-side fault, not "no titles found" — retry shortly.',
+    );
+  }
+  TITLES = rows as ElangdellTitle[];
+  SURVEYED_AT = surveyedAt;
+}
 
 const STORE_URL = 'https://www.cali.org/the-elangdell-bookstore';
 
@@ -1071,6 +1105,9 @@ function elangdellBook(args: Record<string, unknown>) {
 }
 
 async function callTool(name: string, args: Record<string, unknown>): Promise<unknown> {
+  // Every tool here answers FROM the baked table, so adopt it once at the
+  // door rather than in each of the three (fleet #3358).
+  ensureTitles(args);
   switch (name) {
     case 'elangdell_titles':
       return elangdellTitles(args);
