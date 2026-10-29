@@ -1,12 +1,20 @@
 {
   "name": "@pipeworx/mcp-cali-elangdell",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "CALI eLangdell MCP — the free, Creative Commons-licensed US law-school casebooks and course materials published by CALI's eLangdell Press (cali.org/the-elangdell-bookstore): 60+ titles across torts, contracts, constitutional law, evidence, tax, legal research and more, each with its authors…",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./tools.json": "./tools.json",
+    "./package.json": "./package.json"
+  },
   "bin": {
     "mcp-cali-elangdell": "bin/cli.js"
+  },
+  "files": ["bin/", "lib/", "tools.json", "server.json"],
+  "engines": {
+    "node": ">=18"
   },
   "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "cali-elangdell"],
   "license": "MIT",
@@ -14,19 +22,12 @@
     "type": "git",
     "url": "git+https://github.com/pipeworx-io/mcp-cali-elangdell.git"
   },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
-    "tsx": "^4.19.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3",
-    "@cloudflare/workers-types": "^4.20260405.1"
-  },
+  "mcpName": "io.github.pipeworx-io/cali-elangdell",
   "pipeworx": {
-    "sourceHash": "v1-d5819a82c266ec8c761e87e1aa83f057bc464736ef276e996896afb623f1b5c0",
-    "sourceCommit": "5d8d3a58a457b8464c117515d81b8b6ecb53fdfb"
+    "mode": "gateway",
+    "slug": "cali-elangdell",
+    "gatewaySlug": "cali-elangdell",
+    "sourceHash": "v1-490a303e5bedec0224a7ccc8f6c86a73b7a76f770080b15292c014a2dc2cce05",
+    "sourceCommit": "4277282d72f9bf55e548b3799aaf737baf22152f"
   }
 }
