@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-cali-elangdell",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "CALI eLangdell MCP — the free, Creative Commons-licensed US law-school casebooks and course materials published by CALI's eLangdell Press (cali.org/the-elangdell-bookstore): 60+ titles across torts, contracts, constitutional law, evidence, tax, legal research and more, each with its authors…",
   "type": "module",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
     "mode": "gateway",
     "slug": "cali-elangdell",
     "gatewaySlug": "cali-elangdell",
-    "sourceHash": "v1-490a303e5bedec0224a7ccc8f6c86a73b7a76f770080b15292c014a2dc2cce05",
-    "sourceCommit": "4277282d72f9bf55e548b3799aaf737baf22152f"
+    "sourceHash": "v1-a4166a7d9e422c426116453d43dac4f642a8ab0a8010cfe9ad97d141e4349d9d",
+    "sourceCommit": "547a3983b42dacf4389ca474860b0a1dee8e6053"
   }
 }
